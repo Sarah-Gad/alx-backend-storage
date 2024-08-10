@@ -14,4 +14,4 @@ DELIMITER ;
 
 SELECT origin, searching_and_suming(origin) AS nb_fans
 FROM (SELECT DISTINCT origin FROM metal_bands) AS unique_origins
-ORDER BY nb_fans DESC;
+ORDER BY nb_fans DESC, origin ASC;
