@@ -1,25 +1,12 @@
--- Creates a stored procedure AddBonus that adds a new
--- correction for a student.
-DROP PROCEDURE IF EXISTS AddBonus;
+-- This Scipt Creates a Procedure
 DELIMITER $$
-CREATE PROCEDURE AddBonus (user_id INT, project_name VARCHAR(255), score FLOAT)
+CREATE PROCEDURE AddBonus(IN user_id INT, IN project_name varchar(255), IN score INT)
 BEGIN
-    DECLARE project_count INT DEFAULT 0;
-    DECLARE project_id INT DEFAULT 0;
-
-    SELECT COUNT(id)
-        INTO project_count
-        FROM projects
-        WHERE name = project_name;
-    IF project_count = 0 THEN
-        INSERT INTO projects(name)
-            VALUES(project_name);
+    IF NOT EXISTS (SELECT 1 FROM projects WHERE name = project_name) THEN
+        INSERT INTO projects (name)
+        VALUES (project_name);
     END IF;
-    SELECT id
-        INTO project_id
-        FROM projects
-        WHERE name = project_name;
-    INSERT INTO corrections(user_id, project_id, score)
-        VALUES (user_id, project_id, score);
+    INSERT INTO corrections (user_id, project_id, score)
+    VALUES (user_id, (SELECT id FROM projects WHERE name = project_name), score);
 END $$
 DELIMITER ;
