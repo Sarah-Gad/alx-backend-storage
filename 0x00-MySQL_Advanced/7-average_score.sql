@@ -1,7 +1,7 @@
 -- This script defines a stored Procedure.
 DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 DELIMITER $$
-CREATE PROCEDURE ComputeAverageScoreForUser (IN user_id INT)
+CREATE PROCEDURE ComputeAverageScoreForUser (user_id INT)
 BEGIN
     DECLARE sum DECIMAL(10, 2);
     DECLARE num INT;
